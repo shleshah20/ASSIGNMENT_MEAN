@@ -1,0 +1,8 @@
+<br>
+<br>
+<label>City : </label>
+<select [(ngModel)]="selectedValue">
+    <option *ngFor="let item of city" [value]="item">{{item}}</option>
+</select>
+<br>
+<p>{{selectedValue}}</p>

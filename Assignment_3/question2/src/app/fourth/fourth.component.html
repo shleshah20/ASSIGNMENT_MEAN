@@ -1,0 +1,8 @@
+<br>
+<label>Select : </label>
+<select [(ngModel)]="selectedValue" (click)="select()">
+    <option value="textbox">Textbox</option>
+    <option value="textarea">Textarea</option>
+</select>
+<p *ngIf="textbox==true"><label>Name : </label><input type="text" /></p>
+<p *ngIf="textarea==true"><label>address : </label><textarea></textarea></p>

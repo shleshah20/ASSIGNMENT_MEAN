@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" type="text/javascript">
+        </script>
+    <script>
+        function logout(){
+                localStorage.removeItem("token")
+                window.location = "./login.html"
+            }
+        $(document).ready(function () {
+            
+            const token = localStorage.getItem("token")
+            $.ajax({
+                url: 'http://localhost:5000/display',
+                type: 'GET',
+                cache: false,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                success: function (data) {
+                    var result = data
+                    var content = `<tr>
+                        <td>Name</td>
+                        <td>Address</td>
+                        <td>Email</td>
+                        <td>Gender</td>
+                        <td>Update</td>
+                        <td>Delete</td>
+                        </tr>`
+                    $.each(result, function (key, element) {
+                        content += "<tr>" +
+                            "<td>" + element.name + "</td>" 
+                            + "<td>" + element.address + "</td>"
+                            + "<td>" + element.email + "</td>"
+                            + "<td>" + element.gender + "</td>"
+                            + "<td>" + "<a href='./update.html?id="+element._id+"'>Update</a>" + "</td>"
+                            + "<td>" + "<a href='./delete.html?id="+element._id+"'>Delete</a>" + "</td>"
+                            + "</tr>";
+                    });
+                    
+
+                    $('#displayTableData').append(content);
+                },
+                error: function (data) {
+                    window.location = "file:///D:/NodeJs/f_Assignment2_4/login.html"
+
+                }
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <a href="./insert.html">Add Student</a><br><br>
+    <div id="tableDisplay">
+        <div id="data">
+            <table border="5px" id="displayTableData">
+
+            </table>
+        </div>
+        <br>
+        <br>
+        <div id="error"></div>
+        <br>
+        <br>
+        <div><button onClick="logout()">Logout</button></div>
+    </div>
+    <br>
+</body>
+
+</html>

@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" type="text/javascript">
+        </script>
+    <script>
+        $(document).ready(function () {
+            const token = localStorage.getItem("token")
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+            var mid = getParameterByName("id", window.location.href);
+            $.ajax({
+                url: 'http://localhost:5000/delete/' + mid,
+                type: 'GET',
+                cache: false,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                    Authorization: `Bearer ${token}`
+                },
+                success: function (data) {
+                    window.location = "./display.html"
+                },
+                error: function (data) {
+                    alert(JSON.stringify(data))
+                    $('#error').text(JSON.stringify(data));
+
+                }
+            });
+        })
+    </script>
+</head>

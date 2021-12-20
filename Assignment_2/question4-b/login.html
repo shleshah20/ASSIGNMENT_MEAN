@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" type="text/javascript">
+        </script>
+    <script>
+        $(document).ready(function () {
+            $("#formSubmit").submit(function () {
+                const username = document.getElementsByName('username')[0].value
+                const password = document.getElementsByName('password')[0].value
+                $.ajax({
+                    url: 'http://localhost:5000/login',
+                    type: 'Post',
+                    data: JSON.stringify({
+                        email: username,
+                        password: password
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                    },
+                    success: function (data) {
+                        alert("data" + " " + JSON.stringify(data))
+                        localStorage.setItem("token", data);
+                        window.location = "./display.html"
+                    },
+                    error: function (data) {
+                        alert("error" + " " + JSON.stringify(data))
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form id="formSubmit" method="post">
+        Username : <input type="text" name="username" /><br><br>
+        Password : <input type="text" name="password" /><br><br>
+        <input type="submit" />
+    </form>
+    <p id="para"></p>
+</body>
+
+</html>

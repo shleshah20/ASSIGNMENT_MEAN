@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous" type="text/javascript">
+        </script>
+    <script>
+        $(document).ready(function () {
+            const token = localStorage.getItem("token")
+            $("#formSubmit").submit(function () {
+                var name = document.getElementsByName('name')[0].value
+                var address = document.getElementsByName('address')[0].value
+                var email = document.getElementsByName('email')[0].value
+                var password = document.getElementsByName('password')[0].value
+                var gender = document.getElementsByName('gender')[0].value
+
+                $.ajax({
+                    url: 'http://localhost:5000/insert',
+                    type: 'Post',
+                    data: JSON.stringify({
+                        name: name,
+                        address: address,
+                        email: email,
+                        password: password,
+                        gender: gender
+                    }),
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                        Authorization: `Bearer ${token}`
+                    },
+                    success: function (data) {
+                            alert(JSON.stringify(data))
+                    },
+                    error: function (data) {
+                        alert(JSON.stringify(data))
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+
+<body>
+    <form action="./display.html" id="formSubmit" method="post">
+        Name : <input type="text" name="name" /><br><br>
+        Address : <input type="text" name="address" /><br><br>
+        Email : <input type="text" name="email" /><br><br>
+        Password : <input type="text" name="password" /><br><br>
+        Gender : <input type="radio" name="gender" value="Male" />Male
+        <input type="radio" name="gender" value="Female" />Female<br><br>
+        <button><a href="./display.html">Back</a></button>
+        <input type="submit" />
+    </form>
+    <p id="para"></p>
+</body>
+
+</html>
